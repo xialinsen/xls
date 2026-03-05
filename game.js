@@ -25,6 +25,31 @@ let isPaused = false;
 
 highScoreElement.textContent = highScore;
 
+const snakeColors = [
+    { head: '#00ff88', body: '#00cc6a', name: 'green' },
+    { head: '#ff6b6b', body: '#ee5a5a', name: 'red' },
+    { head: '#4dabf7', body: '#339af0', name: 'blue' },
+    { head: '#ffd43b', body: '#fcc419', name: 'yellow' },
+    { head: '#da77f2', body: '#cc5de8', name: 'purple' },
+    { head: '#ff922b', body: '#fd7e14', name: 'orange' },
+    { head: '#20c997', body: '#12b886', name: 'teal' },
+    { head: '#ff6b9d', body: '#f06595', name: 'pink' }
+];
+
+const foodColors = [
+    { main: '#ff6b6b', shadow: '#ee5a5a', stem: '#8b4513', name: 'apple' },
+    { main: '#ffd43b', shadow: '#fcc419', stem: '#5c3d2e', name: 'banana' },
+    { main: '#4dabf7', shadow: '#339af0', stem: '#1864ab', name: 'blueberry' },
+    { main: '#a9e34b', shadow: '#94d82d', stem: '#5c940d', name: 'lime' },
+    { main: '#ff922b', shadow: '#fd7e14', stem: '#d9480f', name: 'orange' },
+    { main: '#da77f2', shadow: '#cc5de8', stem: '#862e9c', name: 'grape' },
+    { main: '#20c997', shadow: '#12b886', stem: '#087f5b', name: 'mint' },
+    { main: '#ff6b9d', shadow: '#f06595', stem: '#c2255c', name: 'strawberry' }
+];
+
+let currentSnakeColorIndex = 0;
+let currentFoodColorIndex = 0;
+
 function initGame() {
     snake = [
         { x: 10, y: 10 },
@@ -35,6 +60,7 @@ function initGame() {
     nextDirection = { x: 1, y: 0 };
     score = 0;
     scoreElement.textContent = score;
+    currentSnakeColorIndex = Math.floor(Math.random() * snakeColors.length);
     spawnFood();
     isPaused = false;
 }
@@ -46,6 +72,7 @@ function spawnFood() {
             y: Math.floor(Math.random() * tileCount)
         };
     } while (snake.some(segment => segment.x === food.x && segment.y === food.y));
+    currentFoodColorIndex = Math.floor(Math.random() * foodColors.length);
 }
 
 function draw() {
@@ -65,6 +92,8 @@ function draw() {
         ctx.stroke();
     }
 
+    const snakeColor = snakeColors[currentSnakeColorIndex];
+
     snake.forEach((segment, index) => {
         const gradient = ctx.createRadialGradient(
             segment.x * gridSize + gridSize / 2,
@@ -74,18 +103,20 @@ function draw() {
             segment.y * gridSize + gridSize / 2,
             gridSize / 2
         );
-        
+
         if (index === 0) {
-            gradient.addColorStop(0, '#00ff88');
-            gradient.addColorStop(1, '#00cc6a');
+            gradient.addColorStop(0, snakeColor.head);
+            gradient.addColorStop(1, snakeColor.body);
         } else {
             const alpha = 1 - (index / snake.length) * 0.5;
-            gradient.addColorStop(0, `rgba(0, 255, 136, ${alpha})`);
-            gradient.addColorStop(1, `rgba(0, 204, 106, ${alpha})`);
+            const headRgb = hexToRgb(snakeColor.head);
+            const bodyRgb = hexToRgb(snakeColor.body);
+            gradient.addColorStop(0, `rgba(${headRgb.r}, ${headRgb.g}, ${headRgb.b}, ${alpha})`);
+            gradient.addColorStop(1, `rgba(${bodyRgb.r}, ${bodyRgb.g}, ${bodyRgb.b}, ${alpha})`);
         }
-        
+
         ctx.fillStyle = gradient;
-        ctx.shadowColor = '#00ff88';
+        ctx.shadowColor = snakeColor.head;
         ctx.shadowBlur = 10;
         ctx.beginPath();
         ctx.roundRect(
@@ -135,6 +166,8 @@ function draw() {
         }
     });
 
+    const foodColor = foodColors[currentFoodColorIndex];
+
     const foodGradient = ctx.createRadialGradient(
         food.x * gridSize + gridSize / 2,
         food.y * gridSize + gridSize / 2,
@@ -143,11 +176,11 @@ function draw() {
         food.y * gridSize + gridSize / 2,
         gridSize / 2
     );
-    foodGradient.addColorStop(0, '#ff6b6b');
-    foodGradient.addColorStop(1, '#ee5a5a');
-    
+    foodGradient.addColorStop(0, foodColor.main);
+    foodGradient.addColorStop(1, foodColor.shadow);
+
     ctx.fillStyle = foodGradient;
-    ctx.shadowColor = '#ff6b6b';
+    ctx.shadowColor = foodColor.main;
     ctx.shadowBlur = 15;
     ctx.beginPath();
     ctx.arc(
@@ -160,8 +193,17 @@ function draw() {
     ctx.fill();
     ctx.shadowBlur = 0;
 
-    ctx.fillStyle = '#8b4513';
+    ctx.fillStyle = foodColor.stem;
     ctx.fillRect(food.x * gridSize + gridSize / 2 - 1, food.y * gridSize + 1, 2, 5);
+}
+
+function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : { r: 0, g: 0, b: 0 };
 }
 
 function update() {

@@ -2,11 +2,11 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const scoreElement = document.getElementById('score');
 const highScoreElement = document.getElementById('highScore');
-const gameOverElement = document.getElementById('gameOver');
-const startScreenElement = document.getElementById('startScreen');
-const finalScoreElement = document.getElementById('finalScore');
+const gameOverElement = document.getElementId('gameOver');
+const startScreenElement = document.getElemeById('startScreen');
+const finalScoreElement = document.getEentById('finalScore');
 const startBtn = document.getElementById('startBtn');
-const restartBtn = document.getElementById('restartBtn');
+const restartBtn = document.getEtById('restartBtn');
 
 const gridSize = 20;
 const tileCount = 20;
@@ -18,7 +18,7 @@ let food = {};
 let direction = { x: 0, y: 3 };
 let nextDirection = { x: 0, y: 3 };
 let score = 0;
-let highScore = localStorage.getItem('snakeHighScore') || 0;
+let highScore = lolStorage.getItem('snakeHighScore') || 0;
 let gameLoop;
 let isGameRunning = false;
 let isPaused = false;
@@ -27,10 +27,10 @@ const skins = {
     classic: {
         headColor1: '#00ff88',
         headColor2: '#00cc6a',
-        bodyColor1: 'rgba(0, 255, 136, ',
-        bodyColor2: 'rgba(0, 204, 106, ',
+        bodyCor1: 'rgba(0, 255, 136, ',
+        bodyClor2: 'rgba(0, 204, 106, ',
         foodColor1: '#ff6b6b',
-        foodColor2: '#ee5a5a',
+        foodCor2: '#ee5a5a',
         glowColor: '#00ff88',
         foodGlow: '#ff6b6b',
         eyeColor: '#000'
@@ -38,8 +38,8 @@ const skins = {
     neon: {
         headColor1: '#ff00ff',
         headColor2: '#cc00cc',
-        bodyColor1: 'rgba(255, 0, 255, ',
-        bodyColor2: 'rgba(204, 0, 204, ',
+        bodyCol1: 'rgba(255, 0, 255, ',
+        bodyCor2: 'rgba(204, 0, 204, ',
         foodColor1: '#00ffff',
         foodColor2: '#00cccc',
         glowColor: '#ff00ff',
@@ -52,7 +52,7 @@ const skins = {
         bodyColor1: 'rgba(255, 215, 0, ',
         bodyColor2: 'rgba(255, 183, 0, ',
         foodColor1: '#ff6b6b',
-        foodColor2: '#ee5a5a',
+        foColor2: '#ee5a5a',
         glowColor: '#ffd700',
         foodGlow: '#ff6b6b',
         eyeColor: '#8b4513'
@@ -61,7 +61,7 @@ const skins = {
         headColor1: '#00bfff',
         headColor2: '#0080ff',
         bodyColor1: 'rgba(0, 191, 255, ',
-        bodyColor2: 'rgba(0, 128, 255, ',
+        bodlor2: 'rgba(0, 128, 255, ',
         foodColor1: '#ff8c00',
         foodColor2: '#ff6b00',
         glowColor: '#00bfff',
@@ -72,7 +72,7 @@ const skins = {
         headColor1: '#ff4500',
         headColor2: '#ff8c00',
         bodyColor1: 'rgba(255, 69, 0, ',
-        bodyColor2: 'rgba(255, 140, 0, ',
+        bodyr2: 'rgba(255, 140, 0, ',
         foodColor1: '#ffff00',
         foodColor2: '#ffcc00',
         glowColor: '#ff4500',
@@ -85,7 +85,7 @@ const skins = {
         bodyColor1: 'rgba(0, 255, 0, ',
         bodyColor2: 'rgba(0, 204, 0, ',
         foodColor1: '#ff0000',
-        foodColor2: '#cc0000',
+        foodCo: '#cc0000',
         glowColor: '#00ff00',
         foodGlow: '#ff0000',
         eyeColor: '#000'
@@ -130,9 +130,9 @@ function draw() {
         ctx.moveTo(i * gridSize, 0);
         ctx.lineTo(i * gridSize, canvas.height);
         ctx.stroke();
-        ctx.beginPath();
+        ctx.beth();
         ctx.moveTo(0, i * gridSize);
-        ctx.lineTo(canvas.width, i * gridSize);
+   
         ctx.stroke();
     }
 
@@ -149,7 +149,7 @@ function draw() {
         );
         
         if (index === 0) {
-            gradient.addColorStop(0, skin.headColor1);
+         
             gradient.addColorStop(1, skin.headColor2);
         } else {
             const alpha = 1 - (index / snake.length) * 0.5;
@@ -173,8 +173,7 @@ function draw() {
 
         if (index === 0) {
             ctx.fillStyle = skin.eyeColor;
-            const eyeOffset = 4;
-            const eyeSize = 3;
+        
             let eye1X, eye1Y, eye2X, eye2Y;
             
             if (direction.x === 1) {
@@ -193,9 +192,7 @@ function draw() {
                 eye2X = segment.x * gridSize + gridSize - 8;
                 eye2Y = segment.y * gridSize + 3;
             } else {
-                eye1X = segment.x * gridSize + 5;
-                eye1Y = segment.y * gridSize + gridSize - 6;
-                eye2X = segment.x * gridSize + gridSize - 8;
+                
                 eye2Y = segment.y * gridSize + gridSize - 6;
             }
             
@@ -224,9 +221,7 @@ function draw() {
     ctx.shadowBlur = 15;
     ctx.beginPath();
     ctx.arc(
-        food.x * gridSize + gridSize / 2,
-        food.y * gridSize + gridSize / 2,
-        gridSize / 2 - 2,
+      
         0,
         Math.PI * 2
     );
@@ -343,24 +338,3 @@ document.addEventListener('keydown', (e) => {
             }
             e.preventDefault();
             break;
-        case 'ArrowLeft':
-        case 'a':
-        case 'A':
-            if (direction.x !== 1) {
-                nextDirection = { x: -1, y: 0 };
-            }
-            e.preventDefault();
-            break;
-        case 'ArrowRight':
-        case 'd':
-        case 'D':
-            if (direction.x !== -1) {
-                nextDirection = { x: 1, y: 0 };
-            }
-            e.preventDefault();
-            break;
-    }
-});
-
-initGame();
-draw();

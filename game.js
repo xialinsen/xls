@@ -89,6 +89,17 @@ const skins = {
         glowColor: '#00ff00',
         foodGlow: '#ff0000',
         eyeColor: '#000'
+    },
+    cyan: {
+        headColor1: '#00ffff',
+        headColor2: '#00cccc',
+        bodyColor1: 'rgba(0, 255, 255, ',
+        bodyColor2: 'rgba(0, 204, 204, ',
+        foodColor1: '#ff00ff',
+        foodColor2: '#cc00cc',
+        glowColor: '#00ffff',
+        foodGlow: '#ff00ff',
+        eyeColor: '#000'
     }
 };
 

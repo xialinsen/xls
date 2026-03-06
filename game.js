@@ -23,6 +23,77 @@ let gameLoop;
 let isGameRunning = false;
 let isPaused = false;
 
+const skins = {
+    classic: {
+        headColor1: '#00ff88',
+        headColor2: '#00cc6a',
+        bodyColor1: 'rgba(0, 255, 136, ',
+        bodyColor2: 'rgba(0, 204, 106, ',
+        foodColor1: '#ff6b6b',
+        foodColor2: '#ee5a5a',
+        glowColor: '#00ff88',
+        foodGlow: '#ff6b6b',
+        eyeColor: '#000'
+    },
+    neon: {
+        headColor1: '#ff00ff',
+        headColor2: '#cc00cc',
+        bodyColor1: 'rgba(255, 0, 255, ',
+        bodyColor2: 'rgba(204, 0, 204, ',
+        foodColor1: '#00ffff',
+        foodColor2: '#00cccc',
+        glowColor: '#ff00ff',
+        foodGlow: '#00ffff',
+        eyeColor: '#000'
+    },
+    golden: {
+        headColor1: '#ffd700',
+        headColor2: '#ffb700',
+        bodyColor1: 'rgba(255, 215, 0, ',
+        bodyColor2: 'rgba(255, 183, 0, ',
+        foodColor1: '#ff6b6b',
+        foodColor2: '#ee5a5a',
+        glowColor: '#ffd700',
+        foodGlow: '#ff6b6b',
+        eyeColor: '#8b4513'
+    },
+    ocean: {
+        headColor1: '#00bfff',
+        headColor2: '#0080ff',
+        bodyColor1: 'rgba(0, 191, 255, ',
+        bodyColor2: 'rgba(0, 128, 255, ',
+        foodColor1: '#ff8c00',
+        foodColor2: '#ff6b00',
+        glowColor: '#00bfff',
+        foodGlow: '#ff8c00',
+        eyeColor: '#000'
+    },
+    fire: {
+        headColor1: '#ff4500',
+        headColor2: '#ff8c00',
+        bodyColor1: 'rgba(255, 69, 0, ',
+        bodyColor2: 'rgba(255, 140, 0, ',
+        foodColor1: '#ffff00',
+        foodColor2: '#ffcc00',
+        glowColor: '#ff4500',
+        foodGlow: '#ffff00',
+        eyeColor: '#000'
+    },
+    matrix: {
+        headColor1: '#00ff00',
+        headColor2: '#00cc00',
+        bodyColor1: 'rgba(0, 255, 0, ',
+        bodyColor2: 'rgba(0, 204, 0, ',
+        foodColor1: '#ff0000',
+        foodColor2: '#cc0000',
+        glowColor: '#00ff00',
+        foodGlow: '#ff0000',
+        eyeColor: '#000'
+    }
+};
+
+let currentSkin = localStorage.getItem('snakeSkin') || 'classic';
+
 highScoreElement.textContent = highScore;
 
 function initGame() {
@@ -65,6 +136,8 @@ function draw() {
         ctx.stroke();
     }
 
+    const skin = skins[currentSkin];
+    
     snake.forEach((segment, index) => {
         const gradient = ctx.createRadialGradient(
             segment.x * gridSize + gridSize / 2,
@@ -76,16 +149,16 @@ function draw() {
         );
         
         if (index === 0) {
-            gradient.addColorStop(0, '#00ff88');
-            gradient.addColorStop(1, '#00cc6a');
+            gradient.addColorStop(0, skin.headColor1);
+            gradient.addColorStop(1, skin.headColor2);
         } else {
             const alpha = 1 - (index / snake.length) * 0.5;
-            gradient.addColorStop(0, `rgba(0, 255, 136, ${alpha})`);
-            gradient.addColorStop(1, `rgba(0, 204, 106, ${alpha})`);
+            gradient.addColorStop(0, `${skin.bodyColor1}${alpha})`);
+            gradient.addColorStop(1, `${skin.bodyColor2}${alpha})`);
         }
         
         ctx.fillStyle = gradient;
-        ctx.shadowColor = '#00ff88';
+        ctx.shadowColor = skin.glowColor;
         ctx.shadowBlur = 10;
         ctx.beginPath();
         ctx.roundRect(
@@ -99,7 +172,7 @@ function draw() {
         ctx.shadowBlur = 0;
 
         if (index === 0) {
-            ctx.fillStyle = '#000';
+            ctx.fillStyle = skin.eyeColor;
             const eyeOffset = 4;
             const eyeSize = 3;
             let eye1X, eye1Y, eye2X, eye2Y;
@@ -143,11 +216,11 @@ function draw() {
         food.y * gridSize + gridSize / 2,
         gridSize / 2
     );
-    foodGradient.addColorStop(0, '#ff6b6b');
-    foodGradient.addColorStop(1, '#ee5a5a');
+    foodGradient.addColorStop(0, skin.foodColor1);
+    foodGradient.addColorStop(1, skin.foodColor2);
     
     ctx.fillStyle = foodGradient;
-    ctx.shadowColor = '#ff6b6b';
+    ctx.shadowColor = skin.foodGlow;
     ctx.shadowBlur = 15;
     ctx.beginPath();
     ctx.arc(
@@ -160,7 +233,7 @@ function draw() {
     ctx.fill();
     ctx.shadowBlur = 0;
 
-    ctx.fillStyle = '#8b4513';
+    ctx.fillStyle = skin.foodGlow === '#ff6b6b' ? '#8b4513' : skin.foodColor2;
     ctx.fillRect(food.x * gridSize + gridSize / 2 - 1, food.y * gridSize + 1, 2, 5);
 }
 
@@ -219,6 +292,25 @@ function startGame() {
 
 startBtn.addEventListener('click', startGame);
 restartBtn.addEventListener('click', startGame);
+
+const skinOptions = document.querySelectorAll('.skin-option');
+skinOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        skinOptions.forEach(opt => opt.classList.remove('active'));
+        option.classList.add('active');
+        currentSkin = option.dataset.skin;
+        localStorage.setItem('snakeSkin', currentSkin);
+        draw();
+    });
+});
+
+const savedSkin = localStorage.getItem('snakeSkin') || 'classic';
+skinOptions.forEach(option => {
+    option.classList.remove('active');
+    if (option.dataset.skin === savedSkin) {
+        option.classList.add('active');
+    }
+});
 
 document.addEventListener('keydown', (e) => {
     if (!isGameRunning && (e.key === ' ' || e.key === 'Enter')) {

@@ -88,7 +88,6 @@ const skins = {
     },
     // 火焰皮肤
     fire: {
-<<<<<<< HEAD
         headColor1: '#ff450',
         headColor2: '#ff8c0',
         bodyColor1: 'rgba(255, 9, 0, ',
@@ -97,31 +96,10 @@ const skins = {
         foodColor2: '#ffc0',
         glowColor: '#ff00',
         foodGlow: '#ff00',
-=======
-        headColor1: '#ff45000',
-        headColor2: '#f8c00',
-        bodyColor1: 'rgba(2255, 69, 0, ',
-        bodyColor2: 'rgba(255,40, 0, ',
-        foodColor1: '#ffff100',
-        foodColor2: '#ffc00',
-        glowColor: '#ff500',
-        foodGlow: '#fff00',
->>>>>>> origin/main
         eyeColor: '#00'
     },
     // 黑客帝国绿色皮肤
     matrix: {
-<<<<<<< HEAD
-        headColor1: '#000',
-        headColor2: '#00cc0',
-        bodyColor1: 'rgba(0, 25, 0, ',
-        bodyColor2: 'rgba(0, 24, 0, ',
-        foodColor1: '#ff0000',
-        foodColor2: '#c000',
-        glowColor: '#00f0',
-        foodGlow: '#ff00',
-        eyeColor: '#00'
-=======
         headColor1: '#00ff00',
         headColor2: '#00cc00',
         bodyColor1: 'rgba(0, 2, 0, ',
@@ -131,7 +109,6 @@ const skins = {
         glowColor: '#00ff00',
         foodGlow: '#ff000',
         eyeColor: '#000'
->>>>>>> origin/main
     }
 };
 

@@ -90,6 +90,7 @@ const skins = {
         foodGlow: '#ff0000',
         eyeColor: '#000'
     },
+<<<<<<< HEAD
     cyan: {
         headColor1: '#00ffff',
         headColor2: '#00cccc',
@@ -99,6 +100,17 @@ const skins = {
         foodColor2: '#cc00cc',
         glowColor: '#00ffff',
         foodGlow: '#ff00ff',
+=======
+    pink: {
+        headColor1: '#ff69b4',
+        headColor2: '#ff1493',
+        bodyColor1: 'rgba(255, 105, 180, ',
+        bodyColor2: 'rgba(255, 20, 147, ',
+        foodColor1: '#00ff00',
+        foodColor2: '#00cc00',
+        glowColor: '#ff69b4',
+        foodGlow: '#00ff00',
+>>>>>>> feature-add-skin
         eyeColor: '#000'
     }
 };

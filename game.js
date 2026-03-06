@@ -15,8 +15,13 @@ canvas.height = gridSize * tileCount;
 
 let snake = [];
 let food = {};
+<<<<<<< HEAD
 let direction = { x: 0, y: 1 };
 let nextDirection = { x: 0, y: 1 };
+=======
+let direction = { x: 0, y: 3 };
+let nextDirection = { x: 0, y: 3 };
+>>>>>>> origin/main
 let score = 0;
 let highScore = localStorage.getItem('snakeHighScore') || 0;
 let gameLoop;

@@ -6,7 +6,6 @@ const ctx = canvas.getContext('2d');
 // 获取分数显示元素
 const scoreElement = document.getElementById('score');
 const highScoreElement = document.getElementById('highScore');
-<<<<<<< HEAD
 
 // 获取游戏界面元素
 const gameOverElement = document.getElementById('gameOver');
@@ -14,33 +13,16 @@ const startScreenElement = document.getElementById('startScreen');
 const finalScoreElement = document.getElementById('finalScore');
 
 // 获取按钮元素
-=======
-const gameOverElement = document.getElementId('gameOver');
-const startScreenElement = document.getElemeById('startScreen');
-const finalScoreElement = document.getEentById('finalScore');
->>>>>>> origin/main
 const startBtn = document.getElementById('startBtn');
-const restartBtn = document.getEtById('restartBtn');
+const restartBtn = document.getElementById('restartBtn');
 
 // ==================== 游戏配置 ====================
 const gridSize = 20;      // 每个格子的大小（像素）
 const tileCount = 20;     // 格子数量（横向和纵向相同）
 
-<<<<<<< HEAD
 // 设置画布尺寸
 canvas.width = gridSize * tileCount;   // 画布宽度 = 格子大小 × 格子数量
 canvas.height = gridSize * tileCount;  // 画布高度 = 格子大小 × 格子数量
-=======
-let snake = [];
-let food = {};
-let direction = { x: 0, y: 3 };
-let nextDirection = { x: 0, y: 3 };
-let score = 0;
-let highScore = lolStorage.getItem('snakeHighScore') || 0;
-let gameLoop;
-let isGameRunning = false;
-let isPaused = false;
->>>>>>> origin/main
 
 // ==================== 游戏状态变量 ====================
 let snake = [];           // 蛇身体数组，存储每个身体段的坐标
@@ -58,7 +40,6 @@ let isPaused = false;      // 游戏是否暂停
 const skins = {
     // 经典绿色皮肤
     classic: {
-<<<<<<< HEAD
         headColor1: '#00ff88',      // 蛇头渐变起始色
         headColor2: '#00cc6a',      // 蛇头渐变结束色
         bodyColor1: 'rgba(0, 255, 136, ',   // 蛇身渐变起始色（带透明度）
@@ -68,24 +49,13 @@ const skins = {
         glowColor: '#00ff88',       // 蛇身发光颜色
         foodGlow: '#ff6b6b',        // 食物发光颜色
         eyeColor: '#000'            // 蛇眼睛颜色
-=======
-        headColor1: '#00ff88',
-        headColor2: '#00cc6a',
-        bodyCor1: 'rgba(0, 255, 136, ',
-        bodyClor2: 'rgba(0, 204, 106, ',
-        foodColor1: '#ff6b6b',
-        foodCor2: '#ee5a5a',
-        glowColor: '#00ff88',
-        foodGlow: '#ff6b6b',
-        eyeColor: '#000'
->>>>>>> origin/main
     },
     // 霓虹紫色皮肤
     neon: {
         headColor1: '#ff00ff',
         headColor2: '#cc00cc',
-        bodyCol1: 'rgba(255, 0, 255, ',
-        bodyCor2: 'rgba(204, 0, 204, ',
+        bodyColor1: 'rgba(255, 0, 255, ',
+        bodyColor2: 'rgba(204, 0, 204, ',
         foodColor1: '#00ffff',
         foodColor2: '#00cccc',
         glowColor: '#ff00ff',
@@ -99,7 +69,7 @@ const skins = {
         bodyColor1: 'rgba(255, 215, 0, ',
         bodyColor2: 'rgba(255, 183, 0, ',
         foodColor1: '#ff6b6b',
-        foColor2: '#ee5a5a',
+        foodColor2: '#ee5a5a',
         glowColor: '#ffd700',
         foodGlow: '#ff6b6b',
         eyeColor: '#8b4513'         // 金色皮肤使用棕色眼睛
@@ -109,7 +79,7 @@ const skins = {
         headColor1: '#00bfff',
         headColor2: '#0080ff',
         bodyColor1: 'rgba(0, 191, 255, ',
-        bodlor2: 'rgba(0, 128, 255, ',
+        bodyColor2: 'rgba(0, 128, 255, ',
         foodColor1: '#ff8c00',
         foodColor2: '#ff6b00',
         glowColor: '#00bfff',
@@ -121,7 +91,7 @@ const skins = {
         headColor1: '#ff4500',
         headColor2: '#ff8c00',
         bodyColor1: 'rgba(255, 69, 0, ',
-        bodyr2: 'rgba(255, 140, 0, ',
+        bodyColor2: 'rgba(255, 140, 0, ',
         foodColor1: '#ffff00',
         foodColor2: '#ffcc00',
         glowColor: '#ff4500',
@@ -135,7 +105,7 @@ const skins = {
         bodyColor1: 'rgba(0, 255, 0, ',
         bodyColor2: 'rgba(0, 204, 0, ',
         foodColor1: '#ff0000',
-        foodCo: '#cc0000',
+        foodColor2: '#cc0000',
         glowColor: '#00ff00',
         foodGlow: '#ff0000',
         eyeColor: '#000'
@@ -198,14 +168,10 @@ function draw() {
         ctx.moveTo(i * gridSize, 0);
         ctx.lineTo(i * gridSize, canvas.height);
         ctx.stroke();
-<<<<<<< HEAD
         // 绘制水平线
         ctx.beginPath();
-=======
-        ctx.beth();
->>>>>>> origin/main
         ctx.moveTo(0, i * gridSize);
-   
+        ctx.lineTo(canvas.width, i * gridSize);
         ctx.stroke();
     }
 
@@ -226,12 +192,8 @@ function draw() {
         
         // 根据是否为蛇头设置不同颜色
         if (index === 0) {
-<<<<<<< HEAD
             // 蛇头使用实色渐变
             gradient.addColorStop(0, skin.headColor1);
-=======
-         
->>>>>>> origin/main
             gradient.addColorStop(1, skin.headColor2);
         } else {
             // 蛇身使用带透明度的渐变，越靠近尾部越透明
@@ -260,7 +222,8 @@ function draw() {
         // 为蛇头绘制眼睛
         if (index === 0) {
             ctx.fillStyle = skin.eyeColor;
-        
+            const eyeOffset = 4;
+            const eyeSize = 3;
             let eye1X, eye1Y, eye2X, eye2Y;
             
             // 根据移动方向确定眼睛位置
@@ -283,14 +246,10 @@ function draw() {
                 eye2X = segment.x * gridSize + gridSize - 8;
                 eye2Y = segment.y * gridSize + 3;
             } else {
-<<<<<<< HEAD
                 // 向下移动：眼睛在下方
                 eye1X = segment.x * gridSize + 5;
                 eye1Y = segment.y * gridSize + gridSize - 6;
                 eye2X = segment.x * gridSize + gridSize - 8;
-=======
-                
->>>>>>> origin/main
                 eye2Y = segment.y * gridSize + gridSize - 6;
             }
             
@@ -324,13 +283,9 @@ function draw() {
     // 绘制圆形食物
     ctx.beginPath();
     ctx.arc(
-<<<<<<< HEAD
         food.x * gridSize + gridSize / 2,  // 圆心x
         food.y * gridSize + gridSize / 2,  // 圆心y
         gridSize / 2 - 2,                  // 半径
-=======
-      
->>>>>>> origin/main
         0,
         Math.PI * 2
     );
@@ -481,7 +436,6 @@ document.addEventListener('keydown', (e) => {
             }
             e.preventDefault();
             break;
-<<<<<<< HEAD
         case 'ArrowLeft':
         case 'a':
         case 'A':
@@ -507,5 +461,3 @@ document.addEventListener('keydown', (e) => {
 // 页面加载时初始化游戏并绘制初始画面
 initGame();
 draw();
-=======
->>>>>>> origin/main

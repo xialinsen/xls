@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "IBM Plex Sans", "Noto Sans SC", "PingFang SC", sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #191714;
+  background: #f5f1e8;
+}
+
+@layer base {
+  body {
+    margin: 0;
+    min-width: 320px;
+    background:
+      radial-gradient(circle at 8% 0%, rgba(10, 67, 102, 0.08), transparent 25%),
+      radial-gradient(circle at 100% 15%, rgba(168, 106, 70, 0.08), transparent 30%),
+      #f5f1e8;
+    color: #191714;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: "Bodoni MT", "Times New Roman", "Songti SC", serif;
+    letter-spacing: 0.01em;
+  }
+
+  .bg-ivory {
+    background-color: #f5f1e8;
+  }
+
+  .bg-paper {
+    background-color: #fffdf8;
+  }
+
+  .text-ink {
+    color: #191714;
+  }
+
+  .text-ocean {
+    color: #0a4366;
+  }
+
+  .text-bronze {
+    color: #a86a46;
+  }
+
+  .bg-ink {
+    background-color: #191714;
+  }
+
+  .bg-bronze {
+    background-color: #a86a46;
+  }
+
+  .border-ink {
+    border-color: #191714;
+  }
+
+  .border-bronze {
+    border-color: #a86a46;
+  }
+
+  .shadow-soft {
+    box-shadow: 0 12px 30px rgba(25, 23, 20, 0.08);
+  }
+}

@@ -10,7 +10,56 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>贪吃蛇</h1>
+            <h1 id="gameTitle">贪吃蛇</h1>
+            <div class="env-panel" aria-label="运行配置">
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <div class="meta-label">环境</div>
+                        <div class="meta-value" id="metaEnv">-</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">网格大小</div>
+                        <div class="meta-value"><span id="metaGridSize">-</span> × <span id="metaGridSize2">-</span></div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">初始速度</div>
+                        <div class="meta-value"><span id="metaInitialSpeed">-</span> ms/tick</div>
+                    </div>
+                </div>
+                <div class="secrets">
+                    <div class="secrets-title">敏感变量（仅展示存在与长度）</div>
+                    <table class="secrets-table">
+                        <thead>
+                            <tr>
+                                <th>变量</th>
+                                <th>存在</th>
+                                <th>长度</th>
+                                <th>校验</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>API_KEY</td>
+                                <td id="secretApiKeyPresent">-</td>
+                                <td id="secretApiKeyLength">-</td>
+                                <td id="secretApiKeyOk">-</td>
+                            </tr>
+                            <tr>
+                                <td>DB_PASSWORD</td>
+                                <td id="secretDbPasswordPresent">-</td>
+                                <td id="secretDbPasswordLength">-</td>
+                                <td id="secretDbPasswordOk">-</td>
+                            </tr>
+                            <tr>
+                                <td>ADMIN_TOKEN</td>
+                                <td id="secretAdminTokenPresent">-</td>
+                                <td id="secretAdminTokenLength">-</td>
+                                <td id="secretAdminTokenOk">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="score-board">
                 <div class="score-item">
                     <span class="label">分数</span>
@@ -74,6 +123,41 @@
         </div>
     </div>
     
+    <script>
+        window.__GAME_CONFIG__ = __CONFIG_JSON__;
+        (function () {
+            const config = window.__GAME_CONFIG__ || {};
+            const title = typeof config.gameTitle === 'string' && config.gameTitle.length > 0 ? config.gameTitle : '贪吃蛇';
+            document.title = title;
+            const titleEl = document.getElementById('gameTitle');
+            if (titleEl) titleEl.textContent = title;
+
+            const envEl = document.getElementById('metaEnv');
+            if (envEl) envEl.textContent = config.env ?? '-';
+            const gridEl = document.getElementById('metaGridSize');
+            const gridEl2 = document.getElementById('metaGridSize2');
+            if (gridEl) gridEl.textContent = config.gridSize ?? '-';
+            if (gridEl2) gridEl2.textContent = config.gridSize ?? '-';
+            const speedEl = document.getElementById('metaInitialSpeed');
+            if (speedEl) speedEl.textContent = config.initialSpeed ?? '-';
+
+            const secrets = config.secrets || {};
+            function setSecretRow(prefix, meta) {
+                const presentEl = document.getElementById(prefix + 'Present');
+                const lengthEl = document.getElementById(prefix + 'Length');
+                const okEl = document.getElementById(prefix + 'Ok');
+                const present = Boolean(meta && meta.present);
+                const length = meta && typeof meta.length === 'number' ? meta.length : 0;
+                const ok = Boolean(meta && meta.ok);
+                if (presentEl) presentEl.textContent = present ? '是' : '否';
+                if (lengthEl) lengthEl.textContent = String(length);
+                if (okEl) okEl.textContent = ok ? '通过' : '不通过';
+            }
+            setSecretRow('secretApiKey', secrets.API_KEY);
+            setSecretRow('secretDbPassword', secrets.DB_PASSWORD);
+            setSecretRow('secretAdminToken', secrets.ADMIN_TOKEN);
+        })();
+    </script>
     <script src="game.js"></script>
 </body>
 </html>

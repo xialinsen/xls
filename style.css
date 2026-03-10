@@ -33,6 +33,91 @@ body {
     animation: pulse 2s ease-in-out infinite;
 }
 
+.env-panel {
+    margin: 12px auto 18px;
+    max-width: 720px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 2px solid rgba(0, 255, 136, 0.25);
+    box-shadow: 0 0 18px rgba(0, 255, 136, 0.12);
+}
+
+.meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.meta-item {
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.meta-label {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.02em;
+}
+
+.meta-value {
+    margin-top: 6px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.9rem;
+    color: #ff6b6b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.secrets {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.secrets-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 10px;
+}
+
+.secrets-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.secrets-table th,
+.secrets-table td {
+    padding: 10px 10px;
+    text-align: left;
+    font-size: 1.05rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.secrets-table thead th {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.22);
+}
+
+.secrets-table tbody td:first-child {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.secrets-table tbody tr:hover td {
+    background: rgba(255, 255, 255, 0.05);
+}
+
 @keyframes pulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
@@ -294,6 +379,10 @@ body {
 @media (max-width: 600px) {
     .header h1 {
         font-size: 1.5rem;
+    }
+
+    .meta-grid {
+        grid-template-columns: 1fr;
     }
     
     .score-board {

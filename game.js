@@ -18,7 +18,8 @@ const restartBtn = document.getElementById('restartBtn');
 
 // ==================== 游戏配置 ====================
 const gridSize = 21;      // 每个格子的大小（像素）
-const tileCount = 21;     // 格子数量（横向和纵向相同）
+const tileCount = Number.parseInt(String(globalThis.__GAME_CONFIG__?.gridSize ?? ''), 10) || 21;     // 格子数量（横向和纵向相同）
+const initialSpeed = Number.parseInt(String(globalThis.__GAME_CONFIG__?.initialSpeed ?? ''), 10) || 100;
 
 // 设置画布尺寸
 canvas.width = gridSize * tileCount;   // 画布宽度 = 格子大小 × 格子数量
@@ -364,7 +365,7 @@ function startGame() {
     gameLoop = setInterval(() => {
         update();
         draw();
-    }, 100);
+    }, initialSpeed);
 }
 
 // ==================== 事件监听器 ====================

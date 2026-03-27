@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-gray-300 font-sans antialiased overflow-x-hidden;
+    /* Optional: global subtle grid background */
+    background-image: 
+      linear-gradient(to right, rgba(31, 41, 55, 0.2) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(31, 41, 55, 0.2) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display text-gray-100;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-surface/80 backdrop-blur-md border border-muted/50;
+  }
+  
+  .glass-panel-hover {
+    @apply transition-all duration-300 hover:border-primary/50 hover:shadow-neon-primary;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+  }
+  
+  .text-glow-secondary {
+    text-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
+  }
+}

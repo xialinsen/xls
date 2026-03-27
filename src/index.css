@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-gray-300 font-sans antialiased overflow-x-hidden;
+    background-image: linear-gradient(to right, #111 1px, transparent 1px),
+                      linear-gradient(to bottom, #111 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-attachment: fixed;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-mono text-gray-100 tracking-wider;
+  }
+}
+
+@layer components {
+  .tech-border {
+    @apply border border-gray-800 relative;
+  }
+  
+  .tech-border::before {
+    content: '';
+    @apply absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-primary opacity-50;
+  }
+  
+  .tech-border::after {
+    content: '';
+    @apply absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-primary opacity-50;
+  }
+
+  .tech-border:hover::before,
+  .tech-border:hover::after {
+    @apply opacity-100 transition-opacity duration-300;
+  }
+  
+  .glitch-text {
+    @apply relative inline-block;
+  }
+  
+  .glitch-text::before,
+  .glitch-text::after {
+    content: attr(data-text);
+    @apply absolute top-0 left-0 w-full h-full opacity-80;
+  }
+  
+  .glitch-text::before {
+    @apply text-primary z-[-1] animate-glitch;
+    left: 2px;
+  }
+  
+  .glitch-text::after {
+    @apply text-accent z-[-2] animate-glitch;
+    left: -2px;
+    animation-direction: reverse;
+    animation-duration: 1.5s;
+  }
+}
+
+/* Custom Scrollbar for tech feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  border: 1px solid #00f0ff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00f0ff;
+}

@@ -67,6 +67,15 @@ body {
     color: #ff6b6b;
 }
 
+.score-item.level-item {
+    border-color: #ffd700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.score-item.level-item .value {
+    color: #ffd700;
+}
+
 .game-wrapper {
     position: relative;
     display: inline-block;

@@ -6,6 +6,7 @@ const ctx = canvas.getContext('2d');
 // 获取分数显示元素
 const scoreElement = document.getElementById('score');
 const highScoreElement = document.getElementById('highScore');
+const levelElement = document.getElementById('level');
 
 // 获取游戏界面元素
 const gameOverElement = document.getElementById('gameOver');
@@ -31,6 +32,14 @@ let direction = { x: 2, y: 2 };      // 当前移动方向
 let nextDirection = { x: 2, y: 2 };  // 下一步移动方向（用于防止快速按键导致反向移动）
 let score = 0;
 let highScore = localStorage.getItem('snakeHighScore') || 0;  // 最高分（从本地存储读取）
+// ==================== 速度等级配置 ====================
+const BASE_SPEED = 150;        // 基础速度（毫秒/帧）
+const MIN_SPEED = 50;          // 最快速度（毫秒/帧）
+const SPEED_STEP = 10;         // 每次加速减少的毫秒数
+const LEVEL_UP_SCORE = 5;      // 每吃多少个食物升一级
+
+let currentLevel = 1;          // 当前等级
+let currentSpeed = BASE_SPEED; // 当前速度
 let gameLoop;             // 游戏循环定时器
 let isGameRunning = false; // 游戏是否正在运行
 let isPaused = false;      // 游戏是否暂停
@@ -134,6 +143,11 @@ function initGame() {
     // 重置分数
     score = 3;
     scoreElement.textContent = score;
+    
+    // 重置速度等级
+    currentLevel = 1;
+    currentSpeed = BASE_SPEED;
+    levelElement.textContent = currentLevel;
     
     // 生成食物
     spawnFood();
@@ -327,6 +341,22 @@ function update() {
     if (head.x === food.x && head.y === food.y) {
         score += 1;                     // 增加分数
         scoreElement.textContent = score;
+        
+        // 检查是否升级（每吃 LEVEL_UP_SCORE 个食物升一级）
+        const newLevel = Math.floor((score - 3) / LEVEL_UP_SCORE) + 1;
+        if (newLevel > currentLevel) {
+            currentLevel = newLevel;
+            currentSpeed = Math.max(MIN_SPEED, BASE_SPEED - (currentLevel - 1) * SPEED_STEP);
+            levelElement.textContent = currentLevel;
+            
+            // 重启游戏循环以应用新速度
+            clearInterval(gameLoop);
+            gameLoop = setInterval(() => {
+                update();
+                draw();
+            }, currentSpeed);
+        }
+        
         spawnFood();                    // 生成新食物
     } else {
         snake.pop();                    // 如果没吃到食物则移除尾部，保持长度不变
@@ -360,11 +390,11 @@ function startGame() {
     
     isGameRunning = true;
     
-    // 启动游戏循环，每100毫秒更新一次
+    // 启动游戏循环，使用当前速度
     gameLoop = setInterval(() => {
         update();
         draw();
-    }, 100);
+    }, currentSpeed);
 }
 
 // ==================== 事件监听器 ====================

@@ -1,0 +1,10 @@
+- [x] 自动化校验脚本可在项目根目录运行，并在失败时给出明确错误与非 0 退出码
+- [x] index.html 的 data-skin 列表与 game.js 的 skins 配置键集合一致
+- [x] 每个皮肤都包含完整字段：headColor1/headColor2/bodyColor1/bodyColor2/foodColor1/foodColor2/glowColor/foodGlow/eyeColor
+- [x] 每个皮肤的颜色值格式合法（hex 或 rgba 前缀），不会导致 Canvas 渲染异常
+- [x] 手工冒烟：点击“开始游戏”（或回车）进入游戏，蛇以固定 tick 移动并持续刷新画面
+- [x] 手工冒烟：方向键/WASD 控制正常；连续快速按键不会出现“瞬间反向”导致自撞
+- [x] 手工冒烟：吃到食物后分数 +1 且蛇长度 +1（下一次移动不移除尾部）
+- [x] 手工冒烟：撞墙或撞到自身会结束，显示“最终分数”，点击“重新开始”可重新进入游戏
+- [x] 手工冒烟：空格可暂停/继续；暂停时蛇不移动，继续后恢复移动
+- [x] 手工冒烟：依次点击 classic/neon/golden/ocean/fire/matrix，蛇与食物均可见且游戏可继续进行

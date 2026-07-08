@@ -15,6 +15,7 @@ const finalScoreElement = document.getElementById('finalScore');
 // 获取按钮元素
 const startBtn = document.getElementById('startBtn');
 const restartBtn = document.getElementById('restartBtn');
+const speedLevelElement = document.getElementById('speedLevel');
 
 // ==================== 游戏配置 ====================
 const gridSize = 41;      // 每个格子的大小（像素）
@@ -34,6 +35,8 @@ let highScore = localStorage.getItem('snakeHighScore') || 0;  // 最高分（从
 let gameLoop;             // 游戏循环定时器
 let isGameRunning = false; // 游戏是否正在运行
 let isPaused = false;      // 游戏是否暂停
+let baseInterval = 100;    // 基础游戏间隔（毫秒）
+let currentInterval = 100; // 当前游戏间隔（毫秒）
 
 // ==================== 皮肤配置 ====================
 // 定义多种皮肤主题，每种皮肤包含蛇头、蛇身、食物的颜色配置
@@ -134,10 +137,14 @@ function initGame() {
     // 重置分数
     score = 3;
     scoreElement.textContent = score;
-    
+
+    // 重置速度
+    currentInterval = baseInterval;
+    speedLevelElement.textContent = 1;
+
     // 生成食物
     spawnFood();
-    
+
     // 取消暂停状态
     isPaused = false;
 }
@@ -328,6 +335,22 @@ function update() {
         score += 1;                     // 增加分数
         scoreElement.textContent = score;
         spawnFood();                    // 生成新食物
+
+        // 每吃 5 个食物提升一级速度，最高 10 级
+        const newLevel = Math.min(Math.floor((score - 3) / 5) + 1, 10);
+        const newInterval = Math.max(baseInterval - (newLevel - 1) * 8, 30);
+        if (newInterval !== currentInterval) {
+            currentInterval = newInterval;
+            speedLevelElement.textContent = newLevel;
+            // 重新启动游戏循环以应用新速度
+            if (isGameRunning && !isPaused) {
+                clearInterval(gameLoop);
+                gameLoop = setInterval(() => {
+                    update();
+                    draw();
+                }, currentInterval);
+            }
+        }
     } else {
         snake.pop();                    // 如果没吃到食物则移除尾部，保持长度不变
     }
@@ -360,11 +383,11 @@ function startGame() {
     
     isGameRunning = true;
     
-    // 启动游戏循环，每100毫秒更新一次
+    // 启动游戏循环
     gameLoop = setInterval(() => {
         update();
         draw();
-    }, 100);
+    }, currentInterval);
 }
 
 // ==================== 事件监听器 ====================
